@@ -1,0 +1,44 @@
+[
+  {
+    "mes": "2026-01",
+    "rotulo": "Jan",
+    "chamadosResolvidos": 1240,
+    "tempoMedioRespostaMin": 42.5,
+    "taxaAutomacaoPct": 38.2
+  },
+  {
+    "mes": "2026-02",
+    "rotulo": "Fev",
+    "chamadosResolvidos": 1385,
+    "tempoMedioRespostaMin": 39.1,
+    "taxaAutomacaoPct": 44.0
+  },
+  {
+    "mes": "2026-03",
+    "rotulo": "Mar",
+    "chamadosResolvidos": 1502,
+    "tempoMedioRespostaMin": 35.8,
+    "taxaAutomacaoPct": 49.7
+  },
+  {
+    "mes": "2026-04",
+    "rotulo": "Abr",
+    "chamadosResolvidos": 1730,
+    "tempoMedioRespostaMin": 31.4,
+    "taxaAutomacaoPct": 55.3
+  },
+  {
+    "mes": "2026-05",
+    "rotulo": "Mai",
+    "chamadosResolvidos": 1896,
+    "tempoMedioRespostaMin": 28.9,
+    "taxaAutomacaoPct": 61.8
+  },
+  {
+    "mes": "2026-06",
+    "rotulo": "Jun",
+    "chamadosResolvidos": 2145,
+    "tempoMedioRespostaMin": 24.6,
+    "taxaAutomacaoPct": 67.4
+  }
+]
