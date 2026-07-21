@@ -57,6 +57,115 @@
       </div>
     </section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script>
+    (async () => {
+      const BRAND   = '#00e5c7';  // linha principal
+      const GRID    = '#1a2233';  // grade sutil
+      const TEXT    = '#94a3b8';  // eixos
+      const SURFACE = '#0c1017';  // fundo do card
+
+      // Garante um <canvas>: usa o que existir, ou cria dentro do container.
+      const alvo = document.getElementById('grafico-principal');
+      if (!alvo) return console.error('[grafico] #grafico-principal não encontrado.');
+
+      let canvas = alvo;
+      if (alvo.tagName !== 'CANVAS') {
+        alvo.textContent = '';
+        alvo.classList.remove('flex', 'items-center', 'justify-center');
+        canvas = document.createElement('canvas');
+        canvas.className = 'w-full h-full';
+        alvo.appendChild(canvas);
+      }
+
+      let dados;
+      try {
+        const resp = await fetch('dados.json');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        dados = await resp.json();
+      } catch (err) {
+        console.error('[grafico] Falha ao carregar dados.json:', err);
+        alvo.textContent = 'Não foi possível carregar os dados.';
+        return;
+      }
+
+      // Gradiente sutil sob a linha
+      const ctx = canvas.getContext('2d');
+      const fill = ctx.createLinearGradient(0, 0, 0, canvas.offsetHeight || 320);
+      fill.addColorStop(0, 'rgba(0, 229, 199, 0.22)');
+      fill.addColorStop(1, 'rgba(0, 229, 199, 0)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dados.map(d => d.rotulo),
+          datasets: [{
+            label: 'Chamados resolvidos',
+            data: dados.map(d => d.chamadosResolvidos),
+            borderColor: BRAND,
+            backgroundColor: fill,
+            borderWidth: 2,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: BRAND,
+            pointBorderColor: SURFACE,  // anel de 2px separa o ponto da linha
+            pointBorderWidth: 2,
+            pointHitRadius: 20          // alvo de hover maior que o marcador
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { top: 8, right: 8 } },
+          plugins: {
+            legend: { display: false }, // série única: o título já a nomeia
+            title: {
+              display: true,
+              text: 'Chamados resolvidos por mês',
+              align: 'start',
+              color: '#e8edf4',
+              font: { family: 'Syne, system-ui, sans-serif', size: 15, weight: '700' },
+              padding: { bottom: 16 }
+            },
+            tooltip: {
+              backgroundColor: '#0f1420',
+              borderColor: GRID,
+              borderWidth: 1,
+              titleColor: '#e8edf4',
+              bodyColor: TEXT,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: c => `${c.parsed.y.toLocaleString('pt-BR')} chamados`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              border: { color: GRID },
+              ticks: { color: TEXT, font: { family: 'IBM Plex Sans, sans-serif', size: 12 } }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: GRID, drawTicks: false },
+              border: { display: false },
+              ticks: {
+                color: TEXT,
+                font: { family: 'IBM Plex Sans, sans-serif', size: 12 },
+                padding: 10,
+                callback: v => v.toLocaleString('pt-BR')
+              }
+            }
+          }
+        }
+      });
+    })();
+</script>
 
 </body>
 </html>
