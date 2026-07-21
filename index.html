@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixaflow Analytics</title>
+  <meta name="description" content="Dashboard de análise de métricas para operações de tecnologia e automação. Transforme dados brutos em decisões claras.">
+
+  <!-- Tipografia: Syne (títulos) + IBM Plex Sans (corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Play CDN — resolve arbitrary values em runtime. Não usar em produção. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+    .font-display { font-family: 'Syne', system-ui, sans-serif; }
+  </style>
+</head>
+<body class="bg-[#06080d] text-[#94a3b8] antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#0c1017]/80 backdrop-blur border-b border-[#1a2233]">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="font-display font-bold text-lg text-[#e8edf4] tracking-tight">
+        Pixaflow Analytics<span class="text-[#00e5c7]">.</span>
+      </a>
+      <a href="#" class="text-sm font-medium text-[#e8edf4] border border-[#1a2233] rounded-lg px-4 py-2 transition-colors hover:border-[#00e5c7] hover:text-[#00e5c7]">
+        Login
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="px-6 pt-24 pb-16 text-center">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="font-display font-extrabold text-4xl md:text-6xl leading-tight tracking-tight text-[#e8edf4]">
+          Transforme os dados da sua operação em decisões claras
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-[#94a3b8] max-w-2xl mx-auto">
+          O Pixaflow Analytics reúne o volume de chamados, o tempo médio de resposta e a taxa de
+          automação da sua equipe em um único painel — sem planilhas, sem ruído.
+        </p>
+        <a href="#" class="inline-block mt-10 bg-[#00e5c7] text-[#06080d] font-semibold rounded-lg px-8 py-3.5 transition-opacity hover:opacity-90">
+          Solicitar Demonstração
+        </a>
+      </div>
+    </section>
+
+    <!-- Container do Dashboard -->
+    <section class="px-6 pb-24">
+      <div class="max-w-6xl mx-auto bg-[#0c1017] border border-[#1a2233] rounded-xl p-4">
+        <div id="grafico-principal" class="w-full h-80 bg-[#0c1017] border border-[#1a2233] rounded-lg shadow-2xl flex items-center justify-center text-[#94a3b8]">O gráfico será renderizado aqui futuramente</div>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
