@@ -1,5 +1,6 @@
 # Pixaflow Analytics
 
+## 1. Casos de uso
 ```mermaid
 graph LR
     ator(("Potencial Cliente"))
