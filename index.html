@@ -17,6 +17,19 @@
   <style>
     body { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
     .font-display { font-family: 'Syne', system-ui, sans-serif; }
+    /* Estilo geral do texto */
+    .logotipo {
+      color: #ffffff; /* Deixa "Pixa" e "Analytics" em branco */
+      font-family: Arial, sans-serif; /* Substitua pela fonte do seu projeto */
+      font-weight: bold;
+      background-color: #0a0e17; /* Fundo escuro parecido com o da imagem */
+      padding: 20px;
+    }
+
+    /* O comando que muda apenas a cor do 'flow' */
+    .cor-flow {
+      color: #00e5a0; /* Tom de ciano vibrante */
+    }
   </style>
 </head>
 <body class="bg-[#06080d] text-[#94a3b8] antialiased">
@@ -25,7 +38,8 @@
   <header class="sticky top-0 z-50 bg-[#0c1017]/80 backdrop-blur border-b border-[#1a2233]">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
       <a href="#" class="font-display font-bold text-lg text-[#e8edf4] tracking-tight">
-        Pixaflow Analytics<span class="text-[#00e5c7]">.</span>
+        <h1 class="logotipo">Pixa<span class="cor-flow">flow</span> Analytics
+</h1><span class="text-[#00e5c7]"></span>
       </a>
       <a href="#" class="text-sm font-medium text-[#e8edf4] border border-[#1a2233] rounded-lg px-4 py-2 transition-colors hover:border-[#00e5c7] hover:text-[#00e5c7]">
         Login
