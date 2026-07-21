@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixaflow Analytics</title>
+  <meta name="description" content="Dashboard de análise de métricas para operações de tecnologia e automação. Transforme dados brutos em decisões claras.">
+
+  <!-- Tipografia: Syne (títulos) + IBM Plex Sans (corpo) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Play CDN — resolve arbitrary values em runtime. Não usar em produção. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body { font-family: 'IBM Plex Sans', system-ui, sans-serif; }
+    .font-display { font-family: 'Syne', system-ui, sans-serif; }
+    /* Estilo geral do texto */
+    .logotipo {
+      color: #ffffff; /* Deixa "Pixa" e "Analytics" em branco */
+      font-family: Arial, sans-serif; /* Substitua pela fonte do seu projeto */
+      font-weight: bold;
+      background-color: #0a0e17; /* Fundo escuro parecido com o da imagem */
+      padding: 20px;
+    }
+
+    /* O comando que muda apenas a cor do 'flow' */
+    .cor-flow {
+      color: #00e5a0; /* Tom de ciano vibrante */
+    }
+  </style>
+</head>
+<body class="bg-[#06080d] text-[#94a3b8] antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-[#0c1017]/80 backdrop-blur border-b border-[#1a2233]">
+    <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="#" class="font-display font-bold text-lg text-[#e8edf4] tracking-tight">
+        <h1 class="logotipo">Pixa<span class="cor-flow">flow</span> Analytics
+</h1><span class="text-[#00e5c7]"></span>
+      </a>
+      <a href="#" class="text-sm font-medium text-[#e8edf4] border border-[#1a2233] rounded-lg px-4 py-2 transition-colors hover:border-[#00e5c7] hover:text-[#00e5c7]">
+        Login
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="px-6 pt-24 pb-16 text-center">
+      <div class="max-w-3xl mx-auto">
+        <h1 class="font-display font-extrabold text-4xl md:text-6xl leading-tight tracking-tight text-[#e8edf4]">
+          Transforme os dados da sua operação em decisões claras
+        </h1>
+        <p class="mt-6 text-lg leading-relaxed text-[#94a3b8] max-w-2xl mx-auto">
+          O Pixaflow Analytics reúne o volume de chamados, o tempo médio de resposta e a taxa de
+          automação da sua equipe em um único painel — sem planilhas, sem ruído.
+        </p>
+        <a href="#" class="inline-block mt-10 bg-[#00e5c7] text-[#06080d] font-semibold rounded-lg px-8 py-3.5 transition-opacity hover:opacity-90">
+          Solicitar Demonstração
+        </a>
+      </div>
+    </section>
+
+    <!-- Container do Dashboard -->
+    <section class="px-6 pb-24">
+      <div class="max-w-6xl mx-auto bg-[#0c1017] border border-[#1a2233] rounded-xl p-4">
+        <div id="grafico-principal" class="w-full h-80 bg-[#0c1017] border border-[#1a2233] rounded-lg shadow-2xl flex items-center justify-center text-[#94a3b8]">O gráfico será renderizado aqui futuramente</div>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <script>
+    (async () => {
+      const BRAND   = '#00e5c7';  // linha principal
+      const GRID    = '#1a2233';  // grade sutil
+      const TEXT    = '#94a3b8';  // eixos
+      const SURFACE = '#0c1017';  // fundo do card
+
+      // Garante um <canvas>: usa o que existir, ou cria dentro do container.
+      const alvo = document.getElementById('grafico-principal');
+      if (!alvo) return console.error('[grafico] #grafico-principal não encontrado.');
+
+      let canvas = alvo;
+      if (alvo.tagName !== 'CANVAS') {
+        alvo.textContent = '';
+        alvo.classList.remove('flex', 'items-center', 'justify-center');
+        canvas = document.createElement('canvas');
+        canvas.className = 'w-full h-full';
+        alvo.appendChild(canvas);
+      }
+
+      let dados;
+      try {
+        const resp = await fetch('dados.json');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        dados = await resp.json();
+      } catch (err) {
+        console.error('[grafico] Falha ao carregar dados.json:', err);
+        alvo.textContent = 'Não foi possível carregar os dados.';
+        return;
+      }
+
+      // Gradiente sutil sob a linha
+      const ctx = canvas.getContext('2d');
+      const fill = ctx.createLinearGradient(0, 0, 0, canvas.offsetHeight || 320);
+      fill.addColorStop(0, 'rgba(0, 229, 199, 0.22)');
+      fill.addColorStop(1, 'rgba(0, 229, 199, 0)');
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: dados.map(d => d.rotulo),
+          datasets: [{
+            label: 'Chamados resolvidos',
+            data: dados.map(d => d.chamadosResolvidos),
+            borderColor: BRAND,
+            backgroundColor: fill,
+            borderWidth: 2,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            pointBackgroundColor: BRAND,
+            pointBorderColor: SURFACE,  // anel de 2px separa o ponto da linha
+            pointBorderWidth: 2,
+            pointHitRadius: 20          // alvo de hover maior que o marcador
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { top: 8, right: 8 } },
+          plugins: {
+            legend: { display: false }, // série única: o título já a nomeia
+            title: {
+              display: true,
+              text: 'Chamados resolvidos por mês',
+              align: 'start',
+              color: '#e8edf4',
+              font: { family: 'Syne, system-ui, sans-serif', size: 15, weight: '700' },
+              padding: { bottom: 16 }
+            },
+            tooltip: {
+              backgroundColor: '#0f1420',
+              borderColor: GRID,
+              borderWidth: 1,
+              titleColor: '#e8edf4',
+              bodyColor: TEXT,
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: c => `${c.parsed.y.toLocaleString('pt-BR')} chamados`
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              border: { color: GRID },
+              ticks: { color: TEXT, font: { family: 'IBM Plex Sans, sans-serif', size: 12 } }
+            },
+            y: {
+              beginAtZero: true,
+              grid: { color: GRID, drawTicks: false },
+              border: { display: false },
+              ticks: {
+                color: TEXT,
+                font: { family: 'IBM Plex Sans, sans-serif', size: 12 },
+                padding: 10,
+                callback: v => v.toLocaleString('pt-BR')
+              }
+            }
+          }
+        }
+      });
+    })();
+</script>
+
+</body>
+</html>
